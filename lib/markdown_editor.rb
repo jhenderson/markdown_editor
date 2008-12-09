@@ -37,7 +37,7 @@ module MarkdownEditor
       obj = options[:object] || instance_variable_get("@#{object}")
       options[:class] ||= "markdown_editor"
          
-      textarea = ActionView::Helpers::InstanceTag.new(object, method, self, nil, options.delete(:object))
+      textarea = (Rails.version =~ /^2\.2/) ? ActionView::Helpers::InstanceTag.new(object, method, self, options.delete(:object)) : ActionView::Helpers::InstanceTag.new(object, method, self, nil, options.delete(:object))
       return markdown_editor_output textarea.to_text_area_tag(options), object, method, nil 
     end
     
